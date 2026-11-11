@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Piano Logger — MIDI Visualizer, Lifetime Key Logger &amp; Practice Studio</title>
+<meta name="description" content="Piano Logger is a piano MIDI visualizer and lifetime key logger with analytics, practice tools, Voice Studio and a Windows app. Your data stays on your device.">
+<meta name="theme-color" content="#070b18">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Piano Logger — Every Note. Every Moment.">
+<meta property="og:description" content="Visualize every note, preserve your playing history, explore analytics and practice with purpose. Free web app and Windows app.">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<a class="skip" href="#home">Skip to content</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient>
+    <symbol id="i-logo" viewBox="0 0 64 64"><rect x="6" y="8" width="52" height="48" rx="10" fill="url(#lg)"/><g fill="#fff"><rect x="12" y="15" width="8" height="34" rx="2.5"/><rect x="23" y="15" width="8" height="34" rx="2.5"/><rect x="34" y="15" width="8" height="34" rx="2.5"/><rect x="45" y="15" width="7" height="34" rx="2.5"/></g><g fill="#0a0e1f"><rect x="17" y="15" width="6" height="21" rx="2"/><rect x="28" y="15" width="6" height="21" rx="2"/><rect x="48" y="15" width="4" height="21" rx="2"/></g></symbol>
+    <symbol id="i-piano" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 5v8M12 5v14M16 5v8" stroke="currentColor" stroke-width="1.7" fill="none"/></symbol>
+    <symbol id="i-log" viewBox="0 0 24 24"><path d="M5 4h11l3 3v13H5z M8 11h8M8 14h8M8 17h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-game" viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="11" rx="4" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 10v5M5.5 12.5h5M16 11h.01M18 14h.01" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" fill="none"/></symbol>
+    <symbol id="i-ear" viewBox="0 0 24 24"><path d="M9 18a4 4 0 0 0 4-4c0-3 4-3 4-7a5 5 0 0 0-10 0M12 11a2 2 0 0 1 2-2" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></symbol>
+    <symbol id="i-palette" viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-1 1.5-2s0-2.5 1.5-2.5H18a3 3 0 0 0 3-3A9 9 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="8" cy="11" r="1.2" fill="currentColor"/><circle cx="12" cy="7.5" r="1.2" fill="currentColor"/><circle cx="16" cy="11" r="1.2" fill="currentColor"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M8 11V8a4 4 0 0 1 8 0v3" fill="none" stroke="currentColor" stroke-width="1.7"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 4v11M7 11l5 5 5-5M5 20h14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-bug" viewBox="0 0 24 24"><path d="M9 7a3 3 0 0 1 6 0M7 10h10v4a5 5 0 0 1-10 0zM3 11l4 1M21 11l-4 1M3 18l4-2M21 18l-4-2M12 10v9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-idea" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-git" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.3 1.1 2.9.8.1-.7.4-1.1.6-1.4-2.2-.3-4.600-1.100-4.600-5 0-1.100.4-2 1-2.700-.1-.3-.4-1.300.1-2.700 0 0 .8-.3 2.700 1a9.400 9.400 0 0 1 5 0c1.900-1.300 2.700-1 2.700-1 .5 1.400.2 2.400.1 2.700.6.700 1 1.600 1 2.700 0 3.900-2.400 4.700-4.600 5 .4.300.7.900.7 1.800v2.700c0 .3.200.6.700.5A10 10 0 0 0 12 2z" fill="currentColor"/></symbol>
+    <symbol id="i-telegram" viewBox="0 0 24 24"><path d="M21 4L3 11l6 2.2L11 19l3.2-3.8L19 18.5z M9 13.2L17 7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="17" cy="7" r="1.1" fill="currentColor"/></symbol>
+    <symbol id="i-discord" viewBox="0 0 24 24"><path d="M5 6.5h14a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-6l-3 2.500v-2.500H5a2 2 0 0 1-2-2v-8a2 2 0 0 1 2-2z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="9" cy="12.500" r="1.300" fill="currentColor"/><circle cx="15" cy="12.500" r="1.300" fill="currentColor"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M9 18V6l10-2v12M9 18a3 3 0 1 1-3-3 3 3 0 0 1 3 3zM19 16a3 3 0 1 1-3-3 3 3 0 0 1 3 3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></symbol>
+  </defs>
+</svg>
+
+<header class="nav" id="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="#home" aria-label="Piano Logger home"><span class="logo-vid" aria-hidden="true"><video src="assets/logo-wave.mp4" autoplay muted loop playsinline preload="auto"></video></span><span>Piano Logger</span></a>
+    <nav class="links" id="links" aria-label="Main">
+      <span class="indicator" id="indicator" aria-hidden="true"></span>
+      <a href="#home">Home</a>
+      <a href="#preview">Preview</a>
+      <a href="#features">Features</a>
+      <a href="#downloads">Downloads</a>
+      <a href="#versions">Version History</a>
+      <a href="#about">About</a>
+      <a href="#help">Help</a>
+      <a href="#contact">Contact</a>
+      <div class="links-cta">
+        <a class="btn btn-ghost" href="https://kosandra0.github.io/Piano_Logger/" target="_blank" rel="noopener">Open Web App</a>
+        <a class="btn btn-primary" href="https://github.com/kosandra0/Piano_Logger/releases/latest/download/Piano-Logger-Setup.exe">Download for Windows</a>
+      </div>
+    </nav>
+    <div class="nav-cta">
+      <a class="btn btn-ghost" href="https://kosandra0.github.io/Piano_Logger/" target="_blank" rel="noopener">Open Web App</a>
+      <a class="btn btn-primary" href="https://github.com/kosandra0/Piano_Logger/releases/latest/download/Piano-Logger-Setup.exe"><svg class="ic"><use href="#i-down"/></svg>Download for Windows</a>
+    </div>
+    <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="links"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero" id="home" data-section>
+  <div class="glow g1"></div><div class="glow g2"></div><div class="glow g3"></div>
+  <div class="floaters" aria-hidden="true"><svg><use href="#i-note"/></svg><svg><use href="#i-note"/></svg><svg><use href="#i-note"/></svg><svg><use href="#i-note"/></svg><svg><use href="#i-note"/></svg></div>
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <p class="eyebrow reveal"><span class="dot"></span><span id="hero-ver">Piano Logger</span> · Free for Windows &amp; the web</p>
+      <h1 class="reveal d1">Every Note.<br>Every Moment.<br><span class="grad">Your Musical Journey, Remembered.</span></h1>
+      <p class="lead reveal d2">Meet Piano Logger, your personal musical workspace. Visualize every note, preserve your playing history, explore powerful analytics, practice with purpose, and discover your musical progress.</p>
+      <div class="cta reveal d3">
+        <a class="btn btn-primary btn-lg" href="https://kosandra0.github.io/Piano_Logger/" target="_blank" rel="noopener">Explore Piano Logger <svg class="ic"><use href="#i-ext"/></svg></a>
+        <a class="btn btn-ghost btn-lg" href="https://github.com/kosandra0/Piano_Logger/releases/latest/download/Piano-Logger-Setup.exe"><svg class="ic"><use href="#i-down"/></svg>Download Desktop App</a>
+      </div>
+      <ul class="pills reveal d4">
+        <li id="hero-release">Latest release: loading…</li>
+        <li>Windows 10 / 11 · 64-bit</li>
+        <li>Practice &amp; analytics</li>
+        <li>Privacy-first</li>
+      </ul>
+    </div>
+
+    <div class="hero-art reveal d2" aria-label="Animated illustration of the Piano Logger interface (demonstration data)">
+      <div class="app-window">
+        <div class="titlebar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><b>Piano Logger</b><em>demo data</em></div>
+        <div class="stats">
+          <div class="stat"><small>Lifetime presses</small><strong id="liveLife" data-count="128450">0</strong></div>
+          <div class="stat"><small>Today</small><strong id="liveToday" data-count="1842">0</strong></div>
+          <div class="stat"><small>Avg velocity</small><strong data-count="86">0</strong></div>
+        </div>
+        <div class="wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="roll" id="heroFall" aria-hidden="true"></div>
+        <div class="kb" id="heroKb" role="group" aria-label="Playable demo piano keys"></div>
+      </div>
+      <p class="caption">Illustrative demo — values are not real user statistics. Click the keys!</p>
+    </div>
+  </div>
+</section>
+
+<!-- PREVIEW -->
+<section class="sec" id="preview" data-section>
+  <div class="wrap">
+    <header class="sec-head reveal"><p class="kicker">Live preview</p><h2>Experience Piano Logger</h2><p>See the real web app, or take a look at how the Windows app presents it.</p></header>
+    <div class="seg reveal" role="tablist" aria-label="Preview mode">
+      <button role="tab" id="tab-web" aria-selected="true" aria-controls="pane-web" class="on">Web application</button>
+      <button role="tab" id="tab-desk" aria-selected="false" aria-controls="pane-desk" tabindex="-1">Windows desktop application</button>
+      <span class="seg-bg" aria-hidden="true"></span>
+    </div>
+
+    <div class="pane on" id="pane-web" role="tabpanel" aria-labelledby="tab-web">
+      <div class="browser">
+        <div class="bar"><span class="tl r"></span><span class="tl y"></span><span class="tl g"></span><div class="url">kosandra0.github.io/Piano_Logger</div>
+          <a class="btn btn-primary btn-sm" href="https://kosandra0.github.io/Piano_Logger/" target="_blank" rel="noopener">Open Web App <svg class="ic"><use href="#i-ext"/></svg></a></div>
+        <div class="frame" id="frame">
+          <div class="frame-cover" id="frameCover">
+            <div class="mini-ui" aria-hidden="true">
+              <div class="side"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              <div class="main"><div class="row"><b></b><b></b><b></b></div><div class="chart"><i style="--h:40%"></i><i style="--h:65%"></i><i style="--h:35%"></i><i style="--h:80%"></i><i style="--h:55%"></i><i style="--h:90%"></i><i style="--h:45%"></i><i style="--h:70%"></i><i style="--h:30%"></i><i style="--h:60%"></i></div><div class="kb2"></div></div>
+            </div>
+            <div class="cover-msg">
+              <h3>Load the live app right here</h3>
+              <p>The preview is loaded only when you ask, to keep this page fast. For full MIDI keyboard and microphone functionality, open the app directly in its own tab.</p>
+              <div class="cta"><button class="btn btn-primary" id="loadFrame">Load live preview</button><a class="btn btn-ghost" href="https://kosandra0.github.io/Piano_Logger/" target="_blank" rel="noopener">Open in new tab</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="note">Embedded previews can’t use your MIDI keyboard or microphone. Use <strong>Open Web App</strong> for the full experience (desktop Chrome, Edge, Brave or Opera recommended; Safari has no Web MIDI).</p>
+    </div>
+
+    <div class="pane" id="pane-desk" role="tabpanel" aria-labelledby="tab-desk" hidden>
+      <div class="desk-grid">
+        <div class="app-window big">
+          <div class="titlebar win"><span class="appico"><svg><use href="#i-logo"/></svg></span><b>Piano Logger</b><span class="wc"><i>–</i><i>▢</i><i>✕</i></span></div>
+          <div class="desk-body">
+            <aside class="side2"><u class="act">Overview</u><u>History</u><u>Statistics</u><u>Studio</u><u>Practice</u><u>Voice Studio</u><u>MIDI Bridge</u><u>Themes</u></aside>
+            <div class="desk-main">
+              <div class="stats"><div class="stat"><small>Lifetime presses</small><strong>128,450</strong></div><div class="stat"><small>Sessions</small><strong>312</strong></div><div class="stat"><small>Most played</small><strong>C4</strong></div></div>
+              <div class="chart wide"><i style="--h:30%"></i><i style="--h:55%"></i><i style="--h:42%"></i><i style="--h:75%"></i><i style="--h:60%"></i><i style="--h:92%"></i><i style="--h:48%"></i><i style="--h:68%"></i><i style="--h:38%"></i><i style="--h:80%"></i><i style="--h:52%"></i><i style="--h:64%"></i></div>
+              <small class="demo" aria-hidden="true">live demo notes · not real data</small>
+              <div class="roll desk-roll" id="deskFall" aria-hidden="true"></div>
+              <div class="kb" id="deskKb" role="group" aria-label="Demo piano keys"></div>
+            </div>
+          </div>
+        </div>
+        <ul class="desk-feats stag reveal">
+          <li><svg class="ic"><use href="#i-game"/></svg><div><b>MIDI Keyboard Bridge</b><span>Turns MIDI notes into computer-keyboard key presses for games such as Roblox Virtual Piano.</span></div></li>
+          <li><svg class="ic"><use href="#i-piano"/></svg><div><b>System tray mode</b><span>Keep logging in the tray with very little memory after you close the window.</span></div></li>
+          <li><svg class="ic"><use href="#i-lock"/></svg><div><b>Automatic daily backups</b><span>Saved into <code>Documents\Piano Logger Backups</code> (newest 30 kept).</span></div></li>
+          <li><svg class="ic"><use href="#i-note"/></svg><div><b>SoundFont instruments</b><span>Load your own .sf2 instruments; sound keeps playing when minimized.</span></div></li>
+          <li><svg class="ic"><use href="#i-check"/></svg><div><b>Always on top · Start with Windows</b><span>Plus no MIDI or microphone permission pop-ups.</span></div></li>
+        </ul>
+      </div>
+      <p class="note">This is an <strong>illustrative HTML/CSS representation</strong> of the desktop layout with demonstration data — not a screenshot of the real application. The Windows app shows the same Piano Logger page in its own window.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="sec alt" id="features" data-section>
+  <div class="wrap">
+    <header class="sec-head reveal"><p class="kicker">Features</p><h2>Everything Your Musical Journey Needs</h2></header>
+    <div class="carousel reveal" id="carousel" aria-roledescription="carousel" aria-label="Feature showcase" tabindex="0">
+      <div class="track" id="track">
+
+        <article class="slide" aria-roledescription="slide" aria-label="1 of 8">
+          <div class="s-copy"><span class="tag">Play &amp; visualize</span><h3>Full 88-Key Piano</h3><p>An interactive keyboard with falling MIDI notes and glowing key animations, so you see your playing as you play it.</p>
+          <ul class="ticks"><li>Full 88-key piano</li><li>Falling MIDI notes</li><li>Glowing key animations</li><li>Multiple instrument sounds (synth, grand piano samples, electric piano, organ, strings, music box)</li><li>Real-time playing visualization</li></ul></div>
+          <div class="s-art"><div class="mock"><div class="roll mini" data-fall></div><div class="kb" data-kb></div></div></div>
+        </article>
+
+        <article class="slide" aria-roledescription="slide" aria-label="2 of 8">
+          <div class="s-copy"><span class="tag">Remember everything</span><h3>Lifetime Key Logging</h3><p>Every key press is saved on your own device, so your history keeps growing for as long as you play.</p>
+          <ul class="ticks"><li>Lifetime press count</li><li>Playing history with timestamps</li><li>Note duration and velocity</li><li>Input source (MIDI, PC keyboard, on-screen)</li><li>Session tracking</li></ul></div>
+          <div class="s-art"><div class="mock log"><div class="lr h"><span>Time</span><span>Note</span><span>Vel</span><span>Hold</span><span>Source</span></div>
+            <div class="lr"><span>20:27:29</span><span>C4</span><span>92</span><span>0.31 s</span><span>MIDI</span></div>
+            <div class="lr"><span>20:27:30</span><span>E4</span><span>88</span><span>0.28 s</span><span>MIDI</span></div>
+            <div class="lr"><span>20:27:30</span><span>G4</span><span>85</span><span>0.29 s</span><span>MIDI</span></div>
+            <div class="lr"><span>20:27:32</span><span>A3</span><span>64</span><span>0.74 s</span><span>PC key</span></div>
+            <div class="lr"><span>20:27:35</span><span>D5</span><span>101</span><span>0.12 s</span><span>On-screen</span></div>
+            <div class="big-num"><small>Lifetime presses (demo)</small><strong>128,450</strong></div></div></div>
+        </article>
+
+        <article class="slide" aria-roledescription="slide" aria-label="3 of 8">
+          <div class="s-copy"><span class="tag">Insight</span><h3>Advanced Music Analytics</h3><p>Dashboards that turn raw presses into a picture of how you play and how you are improving.</p>
+          <ul class="ticks"><li>Lifetime statistics</li><li>Per-key statistics</li><li>Velocity analysis</li><li>Playing speed</li><li>Activity charts</li><li>Hand-balance insights</li><li>Year in Review image</li></ul></div>
+          <div class="s-art"><div class="mock dash"><div class="stats"><div class="stat"><small>Keys used</small><strong>72</strong></div><div class="stat"><small>Avg speed</small><strong id="liveSpeed">4.2/s</strong></div></div>
+            <div class="chart"><i style="--h:25%"></i><i style="--h:45%"></i><i style="--h:70%"></i><i style="--h:55%"></i><i style="--h:88%"></i><i style="--h:60%"></i><i style="--h:40%"></i><i style="--h:75%"></i><i style="--h:50%"></i><i style="--h:35%"></i><i style="--h:65%"></i><i style="--h:82%"></i></div>
+            <div class="hands"><span>Left hand <b>46%</b></span><div class="bar2"><i style="width:46%"></i></div><span>Right hand <b>54%</b></span></div><small class="demo">demo data</small></div></div>
+        </article>
+
+        <article class="slide" aria-roledescription="slide" aria-label="4 of 8">
+          <div class="s-copy"><span class="tag">Sing &amp; speak</span><h3>Voice Studio</h3><p>Hear your own voice with effects, or turn the melody you sing or hum into instruments in real time.</p>
+          <ul class="ticks"><li>Voice passthrough with reverb, echo and noise suppression</li><li>Voice-to-instrument conversion</li><li>Real-time pitch tracking</li><li>10 instruments, including piano, violin, cello, flute and synth</li><li>Recording and .wav export</li><li>Voice activity tracking (times only — never sound)</li></ul></div>
+          <div class="s-art"><div class="mock voice"><div class="wave big" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+            <div class="chips"><span class="on">Grand Piano</span><span>Violin</span><span>Cello</span><span>Flute</span><span>Synth Lead</span><span>Organ</span></div><div class="pitch">Detected: <b>A3</b> · 220 Hz</div></div></div>
+        </article>
+
+        <article class="slide" aria-roledescription="slide" aria-label="5 of 8">
+          <div class="s-copy"><span class="tag tag-desk">Windows app only</span><h3>MIDI Keyboard Bridge</h3><p>Play Roblox Virtual Piano and other games with your MIDI keyboard. Notes become ordinary computer-keyboard key presses, sent only to the window you choose and only while it is in front.</p>
+          <ul class="ticks"><li>MIDI-to-keyboard conversion (full 88-key Roblox layout included)</li><li>Mapping studio with learn mode</li><li>Custom profiles, octave / transpose, split keyboard</li><li>Sustain support</li><li>Live monitor with measured latency</li><li>Emergency stop: <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>End</kbd></li></ul>
+          <p class="fine">On the website the Bridge shows a preview of the keys only. It never touches game files or memory.</p></div>
+          <div class="s-art"><div class="mock bridge"><div class="map"><div><kbd>C4</kbd><i>→</i><kbd>t</kbd></div><div><kbd>D4</kbd><i>→</i><kbd>y</kbd></div><div><kbd>E4</kbd><i>→</i><kbd>u</kbd></div><div><kbd>C2</kbd><i>→</i><kbd>Ctrl+1</kbd></div></div>
+            <div class="status"><span class="live"></span> Target: Roblox · Live</div><button class="btn estop" tabindex="-1" aria-hidden="true">Emergency stop</button><small class="demo">illustrative</small></div></div>
+        </article>
+
+        <article class="slide" aria-roledescription="slide" aria-label="6 of 8">
+          <div class="s-copy"><span class="tag">Grow</span><h3>Practice &amp; Ear Training</h3><p>Learn songs, train your ear and capture ideas, all in the same workspace.</p>
+          <ul class="ticks"><li>Practice songs from .mid files</li><li>Play-along or “wait for me” modes</li><li>Hand and part selection</li><li>Playback speed control</li><li>Recorder with MIDI export</li><li>Metronome with timing analysis</li><li>Ear training</li></ul></div>
+          <div class="s-art"><div class="mock prac"><div class="roll mini" data-fall></div><div class="ctrl"><span class="on">Wait for me</span><span>Play-along</span><span>Right hand</span></div><div class="speed"><small>Speed</small><div class="slider"><i style="width:70%"></i></div><b>70%</b></div><div class="rec"><span class="live"></span> Recorder · export .mid</div></div></div>
+        </article>
+
+        <article class="slide" aria-roledescription="slide" aria-label="7 of 8">
+          <div class="s-copy"><span class="tag">Make it yours</span><h3>Theme Studio</h3><p>182 themes with live preview, plus dials to shape the glass, glow and motion to your taste.</p>
+          <ul class="ticks"><li>182 themes</li><li>Your own accent colour</li><li>Glass, blur, reflection and glow controls</li><li>26 calm animated roll backgrounds</li><li>Favourites and recent themes</li></ul></div>
+          <div class="s-art"><div class="mock themes"><div class="sw" style="--a:#22d3ee;--b:#6366f1"></div><div class="sw" style="--a:#f472b6;--b:#8b5cf6"></div><div class="sw" style="--a:#fbbf24;--b:#ef4444"></div><div class="sw" style="--a:#34d399;--b:#0ea5e9"></div><div class="sw" style="--a:#a78bfa;--b:#312e81"></div><div class="sw" style="--a:#fb7185;--b:#f59e0b"></div><div class="sw" style="--a:#38bdf8;--b:#0f172a"></div><div class="sw" style="--a:#e879f9;--b:#4c1d95"></div><small class="demo">illustrative colours</small></div></div>
+        </article>
+
+        <article class="slide" aria-roledescription="slide" aria-label="8 of 8">
+          <div class="s-copy"><span class="tag">Yours alone</span><h3>Privacy &amp; Data Ownership</h3><p>No server, no account. Your key presses, settings and recordings are stored on your own device, and nothing is uploaded.</p>
+          <ul class="ticks"><li>Local data storage</li><li>CSV and JSON export of your whole log</li><li>Backup and restore, including settings, themes and profile</li><li>Your musical history stays with you</li><li>No user accounts, no central data-upload server</li></ul></div>
+          <div class="s-art"><div class="mock priv"><div class="shield"><svg><use href="#i-lock"/></svg></div><div class="flow"><span>Your keyboard</span><i></i><span>Your device</span><i class="x"></i><span class="no">No cloud</span></div><div class="chips"><span>CSV</span><span>JSON</span><span>Backup</span><span>Restore</span></div></div></div>
+        </article>
+
+      </div>
+      <button class="car-btn prev" id="prev" aria-label="Previous feature"><svg viewBox="0 0 24 24" class="ic"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="car-btn next" id="next" aria-label="Next feature"><svg viewBox="0 0 24 24" class="ic"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+    <div class="dots" id="dots" role="tablist" aria-label="Choose a feature"></div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="sec" id="compare" data-section>
+  <div class="wrap">
+    <header class="sec-head reveal"><p class="kicker">Web &amp; Windows</p><h2>One Musical Experience. Two Ways to Play.</h2><p>Both run the same Piano Logger page. The Windows app adds desktop-only extras. Currently Windows 10 / 11, 64-bit — there are no macOS or Linux installers.</p></header>
+    <div class="cmp">
+      <article class="card reveal">
+        <h3>Web application</h3><p class="sub">Open it in a supported desktop browser — nothing to install.</p>
+        <ul class="ticks"><li>Runs in Chrome, Edge, Brave or Opera</li><li>MIDI keyboard support through Web MIDI</li><li>Interactive piano</li><li>Lifetime logging</li><li>Music analytics</li><li>Voice Studio where supported</li><li>Practice tools</li><li>Theme customization</li><li>Local browser storage</li></ul>
+        <a class="btn btn-ghost" href="https://kosandra0.github.io/Piano_Logger/" target="_blank" rel="noopener">Open Web App <svg class="ic"><use href="#i-ext"/></svg></a>
+      </article>
+      <article class="card feat reveal d1">
+        <span class="badge">Windows 10 / 11 · 64-bit</span>
+        <h3>Windows application</h3><p class="sub">Everything in the web app, plus:</p>
+        <ul class="ticks"><li>MIDI Keyboard Bridge</li><li>System tray operation</li><li>Automatic daily backups</li><li>Custom SoundFont (.sf2) instruments</li><li>Always-on-top window</li><li>Start with Windows</li><li>Sound continues when minimized</li><li>Fewer browser permission interruptions</li></ul>
+        <a class="btn btn-primary" href="#downloads">Get the Windows app</a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- DOWNLOADS -->
+<section class="sec alt" id="downloads" data-section>
+  <div class="wrap">
+    <header class="sec-head reveal"><p class="kicker">Download</p><h2>Get Piano Logger</h2><p>Official installers come straight from GitHub Releases.</p></header>
+    <div class="dl card reveal" id="dlCard" aria-live="polite">
+      <div class="dl-main">
+        <div class="dl-ico"><span class="logo-vid" aria-hidden="true"><video src="assets/logo-wave.mp4" autoplay muted loop playsinline preload="auto"></video></span></div>
+        <div>
+          <p class="state" id="dlState">Loading the latest release from GitHub…</p>
+          <h3 id="dlTitle">Piano Logger for Windows</h3>
+          <dl class="meta" id="dlMeta"></dl>
+        </div>
+      </div>
+      <div class="dl-act">
+        <a class="btn btn-primary btn-lg" id="dlBtn" href="https://github.com/kosandra0/Piano_Logger/releases/latest/download/Piano-Logger-Setup.exe"><svg class="ic"><use href="#i-down"/></svg>Download for Windows</a>
+        <div class="dl-links"><a id="dlNotes" href="https://github.com/kosandra0/Piano_Logger/releases/latest" target="_blank" rel="noopener">Release notes</a><a id="dlGh" href="https://github.com/kosandra0/Piano_Logger/releases" target="_blank" rel="noopener">GitHub release</a><a id="dlSha" href="https://github.com/kosandra0/Piano_Logger/releases/latest" target="_blank" rel="noopener" hidden>SHA-256 checksum</a></div>
+      </div>
+      <div class="dl-note" id="dlNote" hidden></div>
+      <p class="fine">Windows may show “Windows protected your PC” because the installer is not signed by a company. Choose <strong>More info → Run anyway</strong>. Installing over an older version keeps your history, settings and recordings — make a backup first to be safe.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VERSIONS -->
+<section class="sec" id="versions" data-section>
+  <div class="wrap">
+    <header class="sec-head reveal"><p class="kicker">Archive</p><h2>Previous Releases</h2><p>Loaded live from GitHub, newest first. New releases appear here automatically.</p></header>
+    <div class="vtools reveal"><label class="sr" for="vq">Search releases</label><input id="vq" type="search" placeholder="Search versions or release notes…" autocomplete="off"><span id="vcount" class="vcount"></span></div>
+    <div id="vlist" class="vlist" aria-live="polite"><div class="skel"></div><div class="skel"></div><div class="skel"></div></div>
+    <div class="vmore"><button class="btn btn-ghost" id="vmore" hidden>Load more releases</button></div>
+    <p class="fine center">Downloads and notes come directly from the <a href="https://github.com/kosandra0/Piano_Logger/releases" target="_blank" rel="noopener">official releases page</a>.</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="sec alt" id="about" data-section>
+  <div class="wrap about">
+    <div class="reveal">
+      <p class="kicker">About</p><h2>About Piano Logger</h2>
+      <p>Piano Logger is a browser-based piano MIDI visualizer and lifetime key logger. Plug in a MIDI keyboard, play with your computer keyboard, or click the on-screen piano — every note you play is saved on your own device, together with note, velocity, duration, time and input source.</p>
+      <p>Progress on an instrument is easy to feel and hard to see. By keeping a complete record of what you play, Piano Logger turns months of practice into something you can look back on: how much you played, which keys you favour, how your speed and dynamics change, and how consistently you showed up.</p>
+      <p>It combines a live visualizer with lifetime analytics, practice tools, a Voice Studio and a deep Theme Studio. There is no server and no account: your history, settings and recordings stay on your device, and you can export or back them up at any time.</p>
+      <p><a class="btn btn-ghost" href="https://github.com/kosandra0/Piano_Logger" target="_blank" rel="noopener"><svg class="ic"><use href="#i-git"/></svg>View the GitHub repository</a></p>
+    </div>
+    <ul class="values stag reveal d1">
+      <li><svg class="ic"><use href="#i-log"/></svg><div><b>Lifetime memory</b><span>Every key press, kept.</span></div></li>
+      <li><svg class="ic"><use href="#i-chart"/></svg><div><b>Real insight</b><span>Charts that explain your playing.</span></div></li>
+      <li><svg class="ic"><use href="#i-lock"/></svg><div><b>Private by design</b><span>Local storage, no accounts, no uploads.</span></div></li>
+      <li><svg class="ic"><use href="#i-palette"/></svg><div><b>Yours to shape</b><span>182 themes and many dials.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<!-- HELP -->
+<section class="sec" id="help" data-section>
+  <div class="wrap narrow">
+    <header class="sec-head reveal"><p class="kicker">Help &amp; support</p><h2>Frequently Asked Questions</h2></header>
+    <div class="faq stag reveal" id="faq">
+      <details><summary>What is Piano Logger?</summary><div>A piano MIDI visualizer and lifetime key logger. Every note you play is saved on your own device, with statistics, charts, practice tools, Voice Studio and a large set of themes.</div></details>
+      <details><summary>How do I connect a MIDI keyboard?</summary><div>Open the app in Chrome, Edge, Brave or Opera on a desktop computer, click anywhere once to enable sound, plug in your keyboard and press <strong>Connect MIDI</strong>. Safari does not support Web MIDI. The Windows app handles MIDI without permission pop-ups.</div></details>
+      <details><summary>Can I use my computer keyboard to play?</summary><div>Yes. Tick <strong>Play with PC keyboard</strong> to play with two playable rows of keys (remappable). You can also click or tap the on-screen piano.</div></details>
+      <details><summary>Does Piano Logger save my playing history?</summary><div>Yes. Every key press is stored with its note, velocity, duration, timestamp and input source, and it stays until you remove it.</div></details>
+      <details><summary>Where is my data stored?</summary><div>Only on your own device. The website keeps it in your browser’s storage; the Windows app keeps its own data. There is no server and no account, and nothing is uploaded. Because the website and the app store data separately, move history between them with a backup. If you clear your browser data without a backup, the website’s history is lost.</div></details>
+      <details><summary>How do I create a backup?</summary><div>Go to <strong>Data → Create backup file</strong>. A Save dialog lets you choose where to put the file. Backups also carry your settings, themes and profile. The Windows app additionally makes an automatic backup every day into <code>Documents\Piano Logger Backups</code>.</div></details>
+      <details><summary>How can I restore previous data?</summary><div>Use <strong>Data → Restore</strong> and choose your backup file. This is also how you bring history from the website into the Windows app, or the other way round.</div></details>
+      <details><summary>What is MIDI Keyboard Bridge?</summary><div>A Windows-app feature that turns MIDI notes into computer-keyboard key presses so you can play Roblox Virtual Piano and similar games with a MIDI keyboard. It only presses ordinary keys, only in the window you choose and only while it is in front. <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>End</kbd> is an emergency stop. Keep an English (US) keyboard layout active in the game.</div></details>
+      <details><summary>Does the desktop application work offline?</summary><div>Yes. After the first download of each sampled instrument, the Windows app works fully offline. The website needs an internet connection to open.</div></details>
+      <details><summary>What operating systems are supported?</summary><div>The Windows app supports Windows 10 and 11, 64-bit; there is no 32-bit, ARM, macOS or Linux build. The web app runs in a modern desktop browser on any operating system (Chrome or Edge recommended).</div></details>
+      <details><summary>How can I update Piano Logger?</summary><div>The website is always current. For the Windows app, run the newest <code>Piano-Logger-Setup.exe</code> over the old one; your history, settings, themes and recordings are kept. If the installer offers “Uninstall before installing”, never tick “Delete the application data”. Make a backup first to be safe.</div></details>
+      <details><summary>Why does Windows display an application warning?</summary><div>The installer isn’t signed by a company, so Windows may say “Windows protected your PC”. Click <strong>More info → Run anyway</strong>. You can compare the installer’s SHA-256 checksum with the one published in the release.</div></details>
+    </div>
+    <div class="cta center reveal"><a class="btn btn-primary" href="https://kosandra0.github.io/Piano_Logger/" target="_blank" rel="noopener">Open Piano Logger</a><a class="btn btn-ghost" href="https://github.com/kosandra0/Piano_Logger#readme" target="_blank" rel="noopener">Full documentation on GitHub</a></div>
+    <p class="fine center">Inside the app, click <strong>?</strong> for the in-app guide, or press <kbd>Ctrl</kbd>+<kbd>K</kbd> to search any action.</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="sec alt" id="contact" data-section>
+  <div class="wrap">
+    <header class="sec-head reveal"><p class="kicker">Contact</p><h2>Get in Touch</h2><p>Piano Logger is supported through its public GitHub project.</p></header>
+    <div class="grid4">
+      <a class="card link reveal" href="https://github.com/kosandra0/Piano_Logger/issues/new" target="_blank" rel="noopener"><svg class="ic"><use href="#i-bug"/></svg><h3>Report a bug</h3><p>Open an issue and tell us what happened.</p></a>
+      <a class="card link reveal d1" href="https://github.com/kosandra0/Piano_Logger/issues/new" target="_blank" rel="noopener"><svg class="ic"><use href="#i-idea"/></svg><h3>Request a feature</h3><p>Suggest something that would help your playing.</p></a>
+      <a class="card link reveal d2" href="https://github.com/kosandra0/Piano_Logger" target="_blank" rel="noopener"><svg class="ic"><use href="#i-git"/></svg><h3>View the repository</h3><p>Browse the source, README and issues.</p></a>
+      <a class="card link reveal d3" href="https://github.com/kosandra0/Piano_Logger/releases" target="_blank" rel="noopener"><svg class="ic"><use href="#i-log"/></svg><h3>Release notes</h3><p>Every change, version by version.</p></a>
+    </div>
+
+    <header class="sec-head social-head reveal"><h3>Find me online</h3><p>Prefer a message? You can also reach me here.</p></header>
+    <div class="grid3">
+      <article class="card social reveal">
+        <svg class="ic big" aria-hidden="true"><use href="#i-telegram"/></svg>
+        <h3>Telegram</h3>
+        <p class="handle"><span class="lbl">Username</span>@i_am_the_last_passenger</p>
+        <div class="acts">
+          <a class="btn btn-primary btn-sm stretch" href="https://t.me/i_am_the_last_passenger" target="_blank" rel="noopener noreferrer" aria-label="Open Telegram profile @i_am_the_last_passenger in a new tab">Open Telegram <svg class="ic"><use href="#i-ext"/></svg></a>
+          <button type="button" class="btn btn-ghost btn-sm copy" data-copy="@i_am_the_last_passenger" aria-label="Copy Telegram username">Copy username</button>
+        </div>
+      </article>
+      <article class="card social reveal d1">
+        <svg class="ic big" aria-hidden="true"><use href="#i-instagram"/></svg>
+        <h3>Instagram</h3>
+        <p class="handle"><span class="lbl">Username</span>@i.have.lost.it.all</p>
+        <div class="acts">
+          <a class="btn btn-primary btn-sm stretch" href="https://www.instagram.com/i.have.lost.it.all/" target="_blank" rel="noopener noreferrer" aria-label="Open Instagram profile @i.have.lost.it.all in a new tab">Open Instagram <svg class="ic"><use href="#i-ext"/></svg></a>
+          <button type="button" class="btn btn-ghost btn-sm copy" data-copy="@i.have.lost.it.all" aria-label="Copy Instagram username">Copy username</button>
+        </div>
+      </article>
+      <article class="card social reveal d2">
+        <svg class="ic big" aria-hidden="true"><use href="#i-discord"/></svg>
+        <h3>Discord</h3>
+        <p class="handle"><span class="lbl">Username</span>3.11.17</p>
+        <p class="dn"><span class="lbl">Display name</span><b>Last Wayferer</b></p>
+        <div class="acts">
+          <button type="button" class="btn btn-primary btn-sm copy" data-copy="3.11.17" aria-label="Copy Discord username 3.11.17">Copy username</button>
+        </div>
+      </article>
+    </div>
+    <p class="sr" id="copyStatus" role="status" aria-live="polite"></p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div><a class="brand" href="#home"><span class="logo-vid" aria-hidden="true"><video src="assets/logo-wave.mp4" autoplay muted loop playsinline preload="auto"></video></span><span>Piano Logger</span></a><p>Every note. Every moment.</p></div>
+    <nav aria-label="Footer"><a href="https://kosandra0.github.io/Piano_Logger/" target="_blank" rel="noopener">Web app</a><a href="#downloads">Downloads</a><a href="#versions">Version history</a><a href="https://github.com/kosandra0/Piano_Logger" target="_blank" rel="noopener">GitHub</a><a href="https://github.com/kosandra0/Piano_Logger/issues" target="_blank" rel="noopener">Issues</a><a href="https://github.com/kosandra0/Piano_Logger/releases" target="_blank" rel="noopener">Releases</a><a href="https://t.me/i_am_the_last_passenger" target="_blank" rel="noopener noreferrer">Telegram</a><a href="https://www.instagram.com/i.have.lost.it.all/" target="_blank" rel="noopener noreferrer">Instagram</a></nav>
+  </div>
+  <div class="wrap fine center">An independent product website for Piano Logger. Statistics shown in mockups are demonstration data.</div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
