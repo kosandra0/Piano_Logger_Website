@@ -1,0 +1,6 @@
+# Private development records: never publish these to the public site
+MASTER_DEVELOPMENT.md
+**/MASTER_DEVELOPMENT.md
+PIANO_LOGGER_WEBSITE_POLISH_PACKAGE/
+*.zip
+backups/
