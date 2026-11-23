@@ -153,14 +153,18 @@
       (d.days_total ? '<progress class="prog" max="' + (+d.days_total || 0) + '" value="' + Math.min(+d.days_total || 0, +d.days_uploaded || 0) + '" aria-label="Days uploaded"></progress><span class="fine">' + (+d.days_uploaded || 0) + ' of ' + (+d.days_total || 0) + ' days uploaded</span>' : '') + '</div>').join('') +
       '<p class="fine">Devices are added and removed in Piano Logger, under Cloud sync.</p>';
   }
+  // E-mail sign-up and password recovery are hidden while no custom SMTP is configured (Supabase's built-in mail is rate limited).
+  // The code stays in place: set these to true when a custom SMTP provider is configured and the flow has been re-tested.
+  const EMAIL_SIGNUP_OPEN = false, EMAIL_RECOVERY_OPEN = false;
   function viewAuth() {
+    if (!EMAIL_SIGNUP_OPEN && S.mode === 'up') S.mode = 'in';
     return '<section class="card auth"><h1>Your practice, anywhere</h1><p class="mut">Sign in with the account you use for Cloud sync in Piano Logger to see your statistics on this device.</p>' +
-      '<div class="tabs-in" role="tablist"><button type="button" role="tab" data-a="mode" data-v="in" aria-selected="' + (S.mode === 'in') + '">Sign in</button><button type="button" role="tab" data-a="mode" data-v="up" aria-selected="' + (S.mode === 'up') + '">Create account</button></div>' +
+      (EMAIL_SIGNUP_OPEN ? '<div class="tabs-in" role="tablist"><button type="button" role="tab" data-a="mode" data-v="in" aria-selected="' + (S.mode === 'in') + '">Sign in</button><button type="button" role="tab" data-a="mode" data-v="up" aria-selected="' + (S.mode === 'up') + '">Create account</button></div>' : '') +
       '<label class="f">Email<input id="em" type="email" autocomplete="email" inputmode="email" spellcheck="false"></label>' +
       '<label class="f">Password' + (S.mode === 'up' ? ' (at least 10 characters)' : '') + '<input id="pw" type="password" autocomplete="' + (S.mode === 'up' ? 'new-password' : 'current-password') + '"></label>' +
       '<div class="msg" id="msg" role="status" data-tone="' + esc(S.tone) + '">' + esc(S.msg) + '</div>' +
       '<button class="btn primary block" id="go" data-a="go">' + (S.mode === 'up' ? 'Create account' : 'Sign in') + '</button>' +
-      (S.mode === 'in' ? '<p class="ctr"><button class="btn sm" data-a="forgot">Forgot password?</button></p>' : '') +
+      (S.mode === 'in' && EMAIL_RECOVERY_OPEN ? '<p class="ctr"><button class="btn sm" data-a="forgot">Forgot password?</button></p>' : '') +
       '<div class="or">or</div><button class="btn block" data-a="google">Continue with Google</button>' +
       '<p class="fine mt">This page only shows totals and practice sessions. Piano Logger works fully without an account; this is optional.</p></section>';
   }
